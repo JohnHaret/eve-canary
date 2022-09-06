@@ -1,0 +1,26 @@
+version: '3.9'
+
+networks:
+  default:
+    external:
+      name: dev
+
+volumes:
+  mongodb:
+
+services:
+  mongodb:
+    container_name: mongodb
+    hostname: mongodb
+    restart: "no"
+    image: mongo:4.4
+    ports:
+      - 127.0.0.1:27017:27017
+    volumes:
+      - mongodb:/data/db
+    expose:
+      - 27017
+    networks:
+      default:
+        aliases:
+          - mongodb.dev.local
