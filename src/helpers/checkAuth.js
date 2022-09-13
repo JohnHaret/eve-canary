@@ -7,9 +7,14 @@ export default (req,res,next) => {
         try {
             const decode = jwt.verify(token,process.env.APP_KEY);
             req.userId = decode._id;
-        } catch (err) {};
+            next();
+        } catch (err) {
+            return res.status(403).json({
+                message: "Request failed"
+            });
+        }
     } else {
-        return res.status(400).json({
+        return res.status(403).json({
             message: "Request failed"
         });
     };
